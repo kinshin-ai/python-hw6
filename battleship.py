@@ -1,5 +1,7 @@
 #Морской бой: один игрок размещает на поле одноклеточные корабли, второй игрок угадывает их расположение
 
+print('Первый игрок размещает на поле одноклеточные корабли, \nВторой игрок угадывает их расположение\n')
+
 #рисуем игровое поле
 rows = 10
 columns = 10
@@ -19,26 +21,27 @@ letters_to_numbers = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H
 
 #блок размещения кораблей
 for n in range(5):
-    print("в какую клетку  ", n + 1, "?")
-    s_column = input("column (A to J):")
-    s_row = input("row (0 to 9):")
+    print(f"В какую клетку поставить корабль {n + 1}?")
+    s_column = input("Столбец от A до J: ")
+    s_row = input("Строка от 0 до 9: ")
     if s_column not in "ABCDEFGHIJ":
-        print("That column is wrong! It should be A - J")
-        s_column = input("column (A to J):")
-        s_row = input("row (0 to 9):")
+        print("Столбец указан неверно, выбери значение от A до J")
+        s_column = input("Столбец от A до J: ")
+        s_row = input("Строка от 0 до 9: ")
     if s_row not in "0123456789":
-        print("That row is wrong! it should be 0 - 9")
-        s_column = input("column (A to J):")
-        s_row = input("row (0 to 9):")
+        print("Строка указана неверно, выбери значение от 0 до 9")
+        s_column = input("Столбец от A до J: ")
+        s_row = input("Строка от 0 до 9: ")
 
     column_number = letters_to_numbers[s_column]
     
+  #проверка занятости клетки
     row_number = int(s_row)
     if board[row_number][column_number] == 'X':
-      print("That spot already has a battleship in it!")
-      print("Where do you want ship ", n + 1, "?")
-      s_column = input("column (A to J):")
-      s_row = input("row (1 to 10):")
+      print("Тут уже есть корабль, выбери другую клетку")
+      print(f"В какую клетку поставить корабль {n + 1}?")
+      s_column = input("Столбец от A до J: ")
+      s_row = input("Строка от 0 до 9: ")
       column_number = letters_to_numbers[s_column]
       row_number = int(s_row)
         
@@ -52,42 +55,42 @@ for n in range(5):
 
 print("\n"*50)
 
-
+#разметка доски для угадывающего
 g_board = [[0 for x in range(columns)] for y in range(rows)]
 
 for i in range(rows):
   for j in range(columns):
     g_board[i][j] = ' '
     
-#print the board
 print("    A   B   C   D   E   F   G   H   I   J")
 print("--+---+---+---+---+---+---+---+---+---+---+")
 for i in range(rows):
   print(i, '|', g_board[i][0], "|", g_board[i][1], "|", g_board[i][2], "|", g_board[i][3], "|", g_board[i][4], "|", g_board[i][5], "|", g_board[i][6], "|", g_board[i][7], "|", g_board[i][8], "|", g_board[i][9], '|')
   print("--+---+---+---+---+---+---+---+---+---+---+")
 
+#цикл угадывания
 guesses = 0
 while guesses < 5:
-    print("Guess a battleship location")
-    column = input("column (A to J):")
-
+    print("Где вражеский корабль?")
+    column = input("Столбец от A до J: ")
     if column not in "ABCDEFGHIJ":
-        print("That column is wrong! It should be A - J")
+        print("Столбец указан неверно, выбери значение от A до J")
+        column = input("Столбец от A до J: ")
 
-    row = input("row (0 to 9):")
-
+    row = input("Строка от 0 до 9: ")
     if row not in "0123456789":
-        print("That row is wrong! it should be 0 - 9")
+        print("Строка указана неверно, выбери значение от 0 до 9")
+        row = input("Строка от 0 до 9: ")
 
     column_number = letters_to_numbers[column]
     row_number = int(row)
 
     if board[row_number][column_number] == 'X':
-        print("HIT!")
+        print("\nПопал")
         g_board[row_number][column_number] = 'X'
         guesses = guesses + 1
     else:
-        print("MISS!")
+        print("\nМимо")
         g_board[row_number][column_number] = '*'
     print("    A   B   C   D   E   F   G   H   I   J")
     print("--+---+---+---+---+---+---+---+---+---+---+")
@@ -95,4 +98,4 @@ while guesses < 5:
       print(i, '|', g_board[i][0], "|", g_board[i][1], "|", g_board[i][2], "|", g_board[i][3], "|", g_board[i][4], "|", g_board[i][5], "|", g_board[i][6], "|", g_board[i][7], "|", g_board[i][8], "|", g_board[i][9], '|')
       print("--+---+---+---+---+---+---+---+---+---+---+")
 
-print("GAME OVER!")
+print("Конец игры!")
